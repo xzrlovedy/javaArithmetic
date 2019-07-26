@@ -105,6 +105,7 @@ public class Test_02 {
 		int[] num1 = {1,7,7,8,9,12,45,65};
 		int[] num2 = {1,5,7,7,2,8,12,34,6};
 		
+		//测试三个方法的结果
 		System.out.println(Arrays.toString(test.method1(num1,num2)));
 		System.out.println(Arrays.toString(test.method2(num1,num2)));
 		System.out.println(Arrays.toString(test.method3(num1,num2)));
