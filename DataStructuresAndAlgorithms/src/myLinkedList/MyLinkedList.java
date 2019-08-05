@@ -1,4 +1,7 @@
 package myLinkedList;
+
+import java.util.Hashtable;
+
 /**
  * 第一如下的数据类存储结点信息
  * @author Administrator
@@ -37,6 +40,7 @@ public class MyLinkedList {
 		//添加结点结束
 		temp.next = newNode;
 	}
+	
 	/**
 	 * @param index 删除第index个元素
 	 * @return
@@ -65,6 +69,7 @@ public class MyLinkedList {
 		}
 		return true;
 	}
+	
 	/**
 	 * 返回结点长度
 	 * @return
@@ -113,10 +118,76 @@ public class MyLinkedList {
 		}
 	}
 	
+	/**
+	 * 从链表中删除重复数据
+	 * @param head
+	 */
+	public void deleteDuplecate(Node head) {
+		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
+		Node tmp = head;
+		Node pre = null;
+		while(tmp!=null) {
+			if(table.containsKey(tmp.data)) {
+				pre.next = tmp.next;
+			}else {
+				table.put(tmp.data, 1);
+				pre = tmp;
+			}
+			tmp = tmp.next;
+		}
+	}
+	
+	/**
+	 * 找出单链表倒数第k个元素
+	 * @param head
+	 * @param k
+	 * @return
+	 */
+	public Node finfElem(Node head,int k) {
+		if(k<1) {
+			return null;
+		}
+		Node p1 = head;
+		Node p2 = head;
+		for(int i=0;i<k-1&&p1!=null;i++) {//前移k-1步
+			p1 = p1.next;
+		}
+		if(p1 == null) {
+			System.out.println("k不合法");
+			return null;
+		}
+		while(p1.next!=null) {
+			p1 = p1.next;
+			p2 = p2.next;
+		}
+		return p2;
+	}
+	
+	/**
+	 * 实现链表反转
+	 * @param head
+	 */
+	public void ReverseIteratively(Node head) {
+		Node pReversedHead = head;
+		Node pNode = head;
+		Node pPrev = null;
+		while(pNode!=null) {
+			Node pNext = pNode.next;
+			if(pNext == null) {
+				pReversedHead = pNode;
+			}
+			pNode.next = pPrev;
+			pPrev = pNode;
+			pNode = pNext;
+		}
+		this.head = pReversedHead;
+	}
+	
 	public static void main(String[] args) {
 		MyLinkedList list = new MyLinkedList();
 		list.addNode(5);
 		list.addNode(3);
+		list.addNode(1);
 		list.addNode(1);
 		list.addNode(3);
 		
@@ -127,6 +198,14 @@ public class MyLinkedList {
 		System.out.println("链表长度："+list.length());
 		System.out.println("排序后：");
 		list.orderList();
+		list.printList();
+		System.out.println("删除重复元素：");
+		list.deleteDuplecate(list.head);
+		System.out.println("链表长度："+list.length());
+		list.printList();
+		System.out.println("倒数第1个元素："+list.finfElem(list.head, 1).data);
+		System.out.println("链表反转：");
+		list.ReverseIteratively(list.head);
 		list.printList();
 	}
 }
